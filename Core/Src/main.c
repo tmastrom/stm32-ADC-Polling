@@ -59,6 +59,13 @@ static void MX_ADC1_Init(void);
 /* USER CODE BEGIN 0 */
 uint32_t value;
 
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc){
+
+	if (hadc->Instance == ADC1 ){
+		value = HAL_ADC_GetValue(&hadc1);
+	}
+}
+
 /* USER CODE END 0 */
 
 /**
@@ -91,7 +98,7 @@ int main(void)
   MX_GPIO_Init();
   MX_ADC1_Init();
   /* USER CODE BEGIN 2 */
-  HAL_ADC_Start(&hadc1);
+  HAL_ADC_Start_IT(&hadc1);
 
 
   /* USER CODE END 2 */
@@ -103,8 +110,6 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	  HAL_ADC_PollForConversion(&hadc1, 1000);
-	  value = HAL_ADC_GetValue(&hadc1);
   }
   /* USER CODE END 3 */
 }
